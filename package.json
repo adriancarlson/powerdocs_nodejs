@@ -8,5 +8,6 @@
 		"start": "node server"
 	},
 	"author": "Adrian Carlson",
-	"license": "ISC"
+	"license": "ISC",
+	"type": "module"
 }
