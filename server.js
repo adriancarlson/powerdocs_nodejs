@@ -11,6 +11,49 @@ const __dirname = dirname(__filename);
 
 const app = express();
 app.use(morgan('dev'));
+app.use(express.json());
+
+app.all('/articles', (req, res, next) => {
+	res.statusCode = 200;
+	res.setHeader('Content-Type', 'text/plain');
+	next();
+});
+
+app.get('/articles', (req, res) => {
+	res.end('Will send all the articles to you');
+});
+
+app.post('/articles', (req, res) => {
+	res.end(`Will add the article: ${req.body.name} with description: ${req.body.description}`);
+});
+
+app.put('/articles', (req, res) => {
+	res.statusCode = 403;
+	res.end('PUT operation not supported on /articles');
+});
+
+app.delete('/articles', (req, res) => {
+	res.end('Deleting all articles');
+});
+
+app.get('/articles/:articleId', (req, res) => {
+	res.end(`Will send details of the article: ${req.params.articleId} to you`);
+});
+
+app.post('/articles/:articleId', (req, res) => {
+	res.statusCode = 403;
+	res.end(`POST operation not supported on /articles/${req.params.articleId}`);
+});
+
+app.put('/articles/:articleId', (req, res) => {
+	res.write(`Updating the article ${req.params.articleId}\n`);
+	res.end(`Will update the campsite ${req.body.name} 
+		with the description: ${req.body.description}`);
+});
+
+app.delete('/articles/:articleId', (req, res) => {
+	res.end(`Deleting article: ${req.params.articleId}`);
+});
 
 app.use(express.static(__dirname + '/public'));
 
