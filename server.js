@@ -1,11 +1,20 @@
 import express from 'express';
+import morgan from 'morgan';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
 const hostname = 'localhost';
 const port = 3000;
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const app = express();
+app.use(morgan('dev'));
+
+app.use(express.static(__dirname + '/public'));
 
 app.use((req, res) => {
-	console.log(req.headers);
 	res.statusCode = 200;
 	res.setHeader('Content-Type', 'text/html');
 	res.end(`<html><body><h1>This is an Express Server</h1></body></html>`);
