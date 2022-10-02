@@ -26,23 +26,23 @@ articleRouter
 		res.end('Deleting all articles');
 	});
 
-// .get('/articles/:articleId', (req, res) => {
-// 	res.end(`Will send details of the article: ${req.params.articleId} to you`);
-// });
-
-// .post('/articles/:articleId', (req, res) => {
-// 	res.statusCode = 403;
-// 	res.end(`POST operation not supported on /articles/${req.params.articleId}`);
-// });
-
-// .put('/articles/:articleId', (req, res) => {
-// 	res.write(`Updating the article ${req.params.articleId}\n`);
-// 	res.end(`Will update the campsite ${req.body.name}
-// 		with the description: ${req.body.description}`);
-// });
-
-// .delete('/articles/:articleId', (req, res) => {
-// 	res.end(`Deleting article: ${req.params.articleId}`);
-// });
-
-export default articleRouter;
+articleRouter
+	.route('/:articleId')
+	.all((req, res, next) => {
+		res.statusCode = 200;
+		res.setHeader('Content-Type', 'text/plain');
+		next();
+	})
+	.get((req, res) => {
+		res.end(`Will send details of the article: ${req.params.articleId}`);
+	})
+	.post((req, res) => {
+		res.statusCode = 403;
+		res.end('POST operation not supported.');
+	})
+	.put((req, res) => {
+		res.end(`Will update article: ${req.body.name} and description: ${req.body.description}`);
+	})
+	.delete((req, res) => {
+		res.end(`Deleting article with id: ${req.params.articleId}`);
+	});
